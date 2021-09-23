@@ -1,0 +1,6 @@
+# Virtual enviroment
+venv/
+__pycache__/
+
+# Don't want to upload the built PDFs or .tex files
+PDFs/
