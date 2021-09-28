@@ -41,7 +41,12 @@ class makeLatex:
         number_of_questions = self.horizontal_no * self.vertical_no
         return zip(*[builder_function() for _ in range(number_of_questions)])
 
-    def single_function_pdf_template(self, data):
+    def multi_function_generate_data(self):
+        builder_function_list = self.builder_function_list
+        number_of_questions = self.horizontal_no * self.vertical_no
+        return zip(*[builder_function_list[i % len(builder_function_list)]() for i in range(number_of_questions)])
+
+    def pdf_template(self, data):
         question_list, solution_list = data
 
         geometry_options = {"tmargin": "1cm", "lmargin": "1cm", "rmargin": "1cm"}
@@ -58,7 +63,7 @@ class makeLatex:
                     )
                     # table.add_hline()
 
-        doc.append(NewPage())
+        doc.generate_pdf(f"PDFs/{self.file_name} Questions", clean_tex=False)
 
         with doc.create(Section(f"{self.title} Solutions", numbering=False)):
             with doc.create(Tabularx("X" * self.horizontal_no, row_height=10)) as table:
@@ -70,8 +75,10 @@ class makeLatex:
                     )
                     # table.add_hline()
 
-        doc.generate_pdf(f"PDFs/{self.file_name}", clean_tex=False)
+        doc.generate_pdf(f"PDFs/{self.file_name} Solutions", clean_tex=False)
 
     def build_pdf(self):
         if len(self.builder_function_list) == 1:
-            self.single_function_pdf_template(self.single_function_generate_data())
+            self.pdf_template(self.single_function_generate_data())
+        else:
+            self.pdf_template(self.multi_function_generate_data())

@@ -44,7 +44,7 @@ def power(min_number: int = 0, max_number: int = 10, decimal_places: int = 0):
         )
         / 10 ** decimal_places
     )
-    return NoEscape(f"${a} ^{{{b}}} =$"), NoEscape(f"${a} ^{{{b}}} = \color{{red}}{a**b}$")
+    return NoEscape(f"${num_format(a)} ^{{{num_format(b)}}} =$"), NoEscape(f"${num_format(a)} ^{{{num_format(b)}}} = \color{{red}}{num_format(a**b)}$")
 
 
 def divide(min_number: int = 0, max_number: int = 10, mode: str = "remainder"):
