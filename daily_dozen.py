@@ -4,11 +4,21 @@ import operator
 import gmail
 import os
 
+def read_emails(path_to_emails: str):
+    with open(path_to_emails, "r") as f:
+       output = [(line.strip()).split()[0] for line in f]
+    return output
 
 def convert_today_to_yesterday(pdf_list):
     for pdf in pdf_list:
-        os.remove(pdf.replace("Daily", "Yesterdaily"))
-        os.rename(pdf, pdf.replace("Daily", "Yesterdaily"))
+        try:
+            os.remove(pdf.replace("Daily", "Yesterdaily"))
+        except:
+            pass
+        try:
+            os.rename(pdf, pdf.replace("Daily", "Yesterdaily"))
+        except:
+            pass
 
 
 def daily_dozen_pdf():
@@ -56,9 +66,10 @@ def compose_email(email_list):
     )
     print(gm.create_draft(service, message, "me"))
 
-
+email_list = read_emails("./emails.txt")
+print(email_list)
 convert_today_to_yesterday(
     ["./PDFs/Daily Dozen Questions.pdf", "./PDFs/Daily Dozen Solutions.pdf"]
 )
 daily_dozen_pdf()
-compose_email(["tessgreen25@gmail.com", "roggreeny@gmail.com"])
+compose_email(email_list)
