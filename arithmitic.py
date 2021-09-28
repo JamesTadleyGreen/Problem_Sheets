@@ -5,7 +5,8 @@ import format
 
 
 def num_format(a):
-    return ('{:,f}'.format(a)).rstrip('0').rstrip('.')
+    return ("{:,f}".format(a)).rstrip("0").rstrip(".")
+
 
 def operator(
     operator,
@@ -27,9 +28,20 @@ def operator(
         )
         / 10 ** decimal_places
     )
+    if a < b:
+        a, b = b, a
     if horizontal:
-        return format.horizontal([num_format(a), num_format(b)], [string_operator, ""],  num_format(round(operator(a,b))))
-    return format.vertical([num_format(a), num_format(b)], [string_operator, ""],  num_format(round(operator(a,b))))
+        return format.horizontal(
+            [num_format(a), num_format(b)],
+            [string_operator, ""],
+            num_format(round(operator(a, b))),
+        )
+    return format.vertical(
+        [num_format(a), num_format(b)],
+        [string_operator, ""],
+        num_format(round(operator(a, b))),
+    )
+
 
 def power(min_number: int = 0, max_number: int = 10, decimal_places: int = 0):
     a = (
@@ -44,7 +56,9 @@ def power(min_number: int = 0, max_number: int = 10, decimal_places: int = 0):
         )
         / 10 ** decimal_places
     )
-    return NoEscape(f"${num_format(a)} ^{{{num_format(b)}}} =$"), NoEscape(f"${num_format(a)} ^{{{num_format(b)}}} = \color{{red}}{num_format(a**b)}$")
+    return NoEscape(f"${num_format(a)} ^{{{num_format(b)}}} =$"), NoEscape(
+        f"${num_format(a)} ^{{{num_format(b)}}} = \color{{red}}{num_format(a**b)}$"
+    )
 
 
 def divide(min_number: int = 0, max_number: int = 10, mode: str = "remainder"):
@@ -57,12 +71,22 @@ def divide(min_number: int = 0, max_number: int = 10, mode: str = "remainder"):
     elif mode == "long":
         return format.long_division([a, b], [a // b, a % b])
 
-def dec_divide(min_number: int = 0, max_number: int = 10, decimal_places: int = 0, divisor_magnitude: int = 0):
+
+def dec_divide(
+    min_number: int = 0,
+    max_number: int = 10,
+    decimal_places: int = 0,
+    divisor_magnitude: int = 0,
+):
     d = random.randint(2, 12) * 10 ** divisor_magnitude
     a = (
-            random.randint(
-                min_number * 10 ** decimal_places, max_number * 10 ** decimal_places
-            )
-            / 10 ** decimal_places
+        random.randint(
+            min_number * 10 ** decimal_places, max_number * 10 ** decimal_places
         )
-    return format.horizontal([num_format(round(d*a, decimal_places)), num_format(d)], ["\div", "="], f"{num_format(a)}")
+        / 10 ** decimal_places
+    )
+    return format.horizontal(
+        [num_format(round(d * a, decimal_places - divisor_magnitude)), num_format(d)],
+        ["\div", "="],
+        f"{num_format(a)}",
+    )

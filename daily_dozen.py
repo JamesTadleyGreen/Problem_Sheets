@@ -1,3 +1,4 @@
+import random
 from latex_builder import makeLatex
 import arithmitic
 import operator
@@ -26,22 +27,22 @@ def daily_dozen_pdf():
         "Daily Dozen",
         "Daily Dozen",
         [
-            lambda: arithmitic.operator(
-                operator.add, "+", -100, 10000, decimal_places=0, horizontal=False
+            lambda: arithmitic.operator( 
+                operator.add, "+", 1, 10000, decimal_places=0, horizontal=False
             ),
             lambda: arithmitic.operator(
-                operator.sub, "-", -100, 10000, decimal_places=0, horizontal=False
+                operator.sub, "-", 1, 10000, decimal_places=0, horizontal=False
             ),
             lambda: arithmitic.operator(
-                operator.mul, "\\times", -100, 10000, decimal_places=0, horizontal=False
+                operator.mul, "\\times", 2, 1000, decimal_places=0, horizontal=False
             ),
-            lambda: arithmitic.power(0, 5, decimal_places=0),
-            lambda: arithmitic.divide(1, 10, mode="mixed"),
-            lambda: arithmitic.divide(1, 10, mode="remainder"),
-            lambda: arithmitic.dec_divide(1, 10, decimal_places=2, divisor_magnitude=1),
+            # lambda: arithmitic.power(0, 5, decimal_places=0),
+            # lambda: arithmitic.divide(1, 10, mode="mixed"),
+            # lambda: arithmitic.divide(1, 10, mode="remainder"),
+            lambda: arithmitic.dec_divide(1, 10, decimal_places=random.randint(0,3), divisor_magnitude=random.randint(0, 4)),
         ],
-        horizontal_no=3,
-        vertical_no=4,
+        horizontal_no=4,
+        vertical_no=3,
     ).build_pdf()
 
 
@@ -66,8 +67,8 @@ def compose_email(email_list):
     )
     print(gm.create_draft(service, message, "me"))
 
+
 email_list = read_emails("./emails.txt")
-print(email_list)
 convert_today_to_yesterday(
     ["./PDFs/Daily Dozen Questions.pdf", "./PDFs/Daily Dozen Solutions.pdf"]
 )
