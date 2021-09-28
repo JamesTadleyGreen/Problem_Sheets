@@ -7,6 +7,7 @@ import os
 
 def convert_today_to_yesterday(pdf_list):
     for pdf in pdf_list:
+        os.remove(pdf.replace("Daily", "Yesterdaily"))
         os.rename(pdf, pdf.replace("Daily", "Yesterdaily"))
 
 
