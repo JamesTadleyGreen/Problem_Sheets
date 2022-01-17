@@ -21,7 +21,7 @@ def convert_today_to_yesterday(pdf_list):
         except:
             pass
 
-
+################################################################-DAD HERE-#############################################################################
 def daily_dozen_pdf():
     makeLatex(
         "Daily Dozen",
@@ -44,6 +44,7 @@ def daily_dozen_pdf():
         horizontal_no=4,
         vertical_no=3,
     ).build_pdf()
+#######################################################################################################################################################
 
 
 def compose_email(email_list):
@@ -68,9 +69,10 @@ def compose_email(email_list):
     print(gm.create_draft(service, message, "me"))
 
 
-email_list = read_emails("./emails.txt")
+#email_list = read_emails("./emails.txt")
 convert_today_to_yesterday(
     ["./PDFs/Daily Dozen Questions.pdf", "./PDFs/Daily Dozen Solutions.pdf"]
 )
 daily_dozen_pdf()
-compose_email(email_list)
+print('Done!')
+#compose_email(email_list)
